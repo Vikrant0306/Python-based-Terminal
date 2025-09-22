@@ -108,11 +108,16 @@ def handle_command(command):
             print(f"rm: {e}")
 
     elif cmd == 'mv':
-        if len(args) < 3:
+        if len(args) != 2:  
             print("mv: missing source or destination")
             return
         try:
-            os.rename(args[1], args[2])
+            os.rename(args[0], args[1])
+            print(f"Moved {args[0]} to {args[1]}")
+        except FileNotFoundError:
+            print(f"mv: {args[0]}: No such file or directory")
+        except PermissionError:
+            print(f"mv: permission denied to move {args[0]}")
         except Exception as e:
             print(f"mv: {e}")
 
